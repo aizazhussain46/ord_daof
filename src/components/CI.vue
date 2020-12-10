@@ -475,6 +475,16 @@ data () {
 return {
 //col: 12,
 
+cities_arr : [
+   {CTY_FULLNAME : 'Karachi', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Islamabad', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Lahore', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Rawalpindi', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Multan', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Peshawar', CTY_CITYCODE : '1'},
+   {CTY_FULLNAME : 'Quetta', CTY_CITYCODE : '1'},
+],
+
 date1: '',
 
 date2: '',
@@ -654,201 +664,83 @@ userScore : '',
       this.getSourceOfIncome();
       this.getMaritalStatus();
 
-      let xmls=`<?xml version="1.0" encoding="utf-8"?>
-      <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-      <soap12:Body>
-      <GetCountry xmlns="http://tempuri.org/" />
-      </soap12:Body>
-      </soap12:Envelope>`;
-
-      axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetCountry',
-      xmls,
-      {headers:
-      {'Content-Type': 'text/xml'}
-      }).then(res=>{
-
-      var parser = new DOMParser();
-      var r = parser.parseFromString(res.data,'application/xml');
-
-      var countries = JSON.parse(r.getElementsByTagName('GetCountryResult')[0].textContent).Table;
-
-      countries.map((v => {
-         
-         var payload = {
-            CNT_OFFICALNAME : v.CNT_OFFICALNAME,
-            CNT_COUNTRYCODE : `${v.CNT_COUNTRYCODE}|${v.CNT_OFFICALNAME}`
-            };
-            this.countries.push(payload);
-
-      }));
-
-
-      }).catch(err=>{console.log(err)});
+      this.countries = [
+         {CNT_OFFICALNAME:'pakistan',CNT_COUNTRYCODE:`1|pakistan`},
+         {CNT_OFFICALNAME:'other',CNT_COUNTRYCODE:`2|other`},
+         ];
 
    },
 methods: {
 
 getMaritalStatus (){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetMaritalStatus xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetMaritalStatus',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetMaritalStatusResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.marital_list.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+         this.marital_list = [
+            {
+            GEN_NAME : 'Male',
+            GEN_ID : `1|Male`
+            },
+            {
+            GEN_NAME : 'Female',
+            GEN_ID : `2|Female`
+            }
+         ];
 },
 
 getSourceOfIncome(){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetSourceOfIncome xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetSourceOfIncome',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetSourceOfIncomeResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.sois.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+   this.sois = [
+            {
+            GEN_NAME : 'Salaries',
+            GEN_ID : `1|Salaries`
+            },
+            {
+            GEN_NAME : 'Business',
+            GEN_ID : `2|Business`
+            }
+         ];
 },
 getAverageAnnualIncome(){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetSalaryAnnualIncome xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
 
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetSalaryAnnualIncome',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetSalaryAnnualIncomeResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.average_annual_income_list.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
+    this.average_annual_income_list = [
+            {
+            GEN_NAME : '100000',
+            GEN_ID : `1|100000`
+            },
+            {
+            GEN_NAME : '200000',
+            GEN_ID : `2|200000`
+            }
+         ];
 
 },
 
 getOccupation(){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetOccupation xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetOccupation',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-var res = JSON.parse(r.getElementsByTagName('GetOccupationResult')[0].textContent).Table;
-
-
- res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.occs.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+   this.occs = [
+       {
+            GEN_NAME : 'occupation 1',
+            GEN_ID : `1|occupation 1`
+            },
+            {
+            GEN_NAME : 'occupation 2',
+            GEN_ID : `2|occupation 2`
+       }
+   ];
 },
 getCityByCountry(prefix,country){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-<soap12:Body>
-<getCityCodeByCountryID xmlns="http://tempuri.org/">
-<CountryCode>${country.split('|')[0]}</CountryCode>
-</getCityCodeByCountryID>
-</soap12:Body>
-</soap12:Envelope>`;
+  
+var id = country.split('|')[0];
 
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=getCityCodeByCountryID',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
+var fltr = this.cities_arr.filter(v => v.CTY_CITYCODE == id);
 
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-var d = JSON.parse(r.getElementsByTagName('getCityCodeByCountryIDResult')[0].textContent).Table;
 var arr = [];
-     d.map((v => {
+     fltr.map((v => {
          arr.push({
             CTY_FULLNAME : v.CTY_FULLNAME,
             CTY_CITYCODE: `${v.CTY_CITYCODE}|${v.CTY_FULLNAME}`
          });
       }));
 
-      prefix == 'pob' ? this.pob_cities_by_id = arr : this.resi_cities_by_id = arr;
 
-}).catch(err=>{console.log(err)});
+
+prefix == 'pob' ? this.pob_cities_by_id = arr : this.resi_cities_by_id = arr;
 
 },
 
