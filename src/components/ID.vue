@@ -403,173 +403,88 @@ val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
    this.getFunds();
    this.getAccount_Statement_Frequency();
    this.GetPaymentMode();
-   
-   let xmls= `<?xml version="1.0" encoding="utf-8"?>
-   <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-   <soap:Body>
-   <GetBank xmlns="http://tempuri.org/" />
-   </soap:Body>
-   </soap:Envelope>`;
-
-   axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetBank',
-   xmls,
-   {headers:
-   {'Content-Type': 'text/xml'}
-   }).then(res=>{
-
-   var parser = new DOMParser();
-   var r = parser.parseFromString(res.data,'application/xml');
-   var d = JSON.parse(r.getElementsByTagName('GetBankResult')[0].textContent).Table;
-
-        d.map((v => {
-         
-         var payload = {
-            BNK_SHORTNAME : v.BNK_SHORTNAME,
-            BNK_ID : `${v.BNK_ID}|${v.BNK_SHORTNAME}`
-            };
-           
-            this.banks.push(payload);
-
-      }))
-
-
-   }).catch(err=>{console.log(err)});
-
-
+   this.GetBanks();
    },
 methods: {
 
+GetBanks(){
+  
+            this.banks.push([
+              {
+                BNK_SHORTNAME : 'HBL',
+                BNK_ID : `1|HBL`
+              },
+              {
+                BNK_SHORTNAME : 'UBL',
+                BNK_ID : `2|UBL`
+              },
+              {
+                BNK_SHORTNAME : 'ABL',
+                BNK_ID : `3|ABL`
+              }
+            ]);
+
+},  
+
 GetPaymentMode  (){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetPaymentMode xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetPaymentMode',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetPaymentModeResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.paymentmodes.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+  this.paymentmodes = [
+            {
+            GEN_NAME : 'Check',
+            GEN_ID : `1|Check`
+            },
+            {
+            GEN_NAME : 'Cash',
+            GEN_ID : `2|Cash`
+       }
+  ];
 },
 
 getAccount_Statement_Frequency  (){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetAccountStatementFrequency xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetAccountStatementFrequency',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetAccountStatementFrequencyResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            GEN_NAME : v.GEN_NAME,
-            GEN_ID : `${v.GEN_ID}|${v.GEN_NAME}`
-            };
-            this.Account_Statement_Frequency.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+  this.Account_Statement_Frequency = [
+            {
+            GEN_NAME : 'Monthly',
+            GEN_ID : `1|Monthly`
+            },
+            {
+            GEN_NAME : 'Quarterly',
+            GEN_ID : `2|Quarterly`
+            },
+            {
+            GEN_NAME : 'Yearly',
+            GEN_ID : `3|Yearly`
+            },
+  ];
 },
 
 getFunds (){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetFund xmlns="http://tempuri.org/" />
-  </soap:Body>
-</soap:Envelope>`;
-
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetFund',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-
-var res = JSON.parse(r.getElementsByTagName('GetFundResult')[0].textContent).Table;
-res.map((v => {
-         
-         var payload = {
-            PRD_NAME : v.PRD_NAME,
-            PRD_PRODUCTCODE : `${v.PRD_PRODUCTCODE}|${v.PRD_NAME}`
-            };
-            this.funds.push(payload);
-
-      }));
-
-
-}).catch(err=>{console.log(err)});
-
+  this.funds = [
+            {
+            PRD_NAME : 'Income Fund',
+            PRD_PRODUCTCODE : `1|Income Fund`
+            },
+            {
+            PRD_NAME : 'Cash Fund',
+            PRD_PRODUCTCODE : `2|Cash Fund`
+            },
+            
+  ];
+        
 },
 
 get_branches(val){
-let xmls1=`<?xml version="1.0" encoding="utf-8"?>
-<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-  <soap12:Body>
-    <GetBankBranchByBankID xmlns="http://tempuri.org/">
-      <BankID>${val.split('|')[0]}</BankID>
-    </GetBankBranchByBankID>
-  </soap12:Body>
-</soap12:Envelope>`;
+        this.branches = [
+            { BBR_NAME : 'Branch A',
+              BBR_ID: `1|Branch A`
+            },
+            { BBR_NAME : 'Branch B',
+              BBR_ID: `2|Branch B`
+            },
+            { BBR_NAME : 'Branch C',
+              BBR_ID: `3|Branch C`
+            },
+          
+        ];
 
-axios.post('https://daofservice.hblasset.com/DigitalAccountOpenTillVerify.asmx?op=GetBankBranchByBankID',
-xmls1,
-{headers:
-{'Content-Type': 'text/xml'}
-}).then(res=>{
-
-var parser = new DOMParser();
-var r = parser.parseFromString(res.data,'application/xml');
-var d = JSON.parse(r.getElementsByTagName('GetBankBranchByBankIDResult')[0].textContent).Table;
-       var branch_arr = [];
-        d.map((v => {
-                
-            branch_arr.push({
-            BBR_NAME : v.BBR_NAME,
-            BBR_ID: `${v.BBR_ID}|${v.BBR_NAME}`,
-
-         });
-           
-      }))
-
-      this.branches = branch_arr;
-}).catch(err=>{console.log(err)});
 
 },
 get_dpo () {
