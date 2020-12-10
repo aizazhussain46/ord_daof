@@ -675,12 +675,12 @@ methods: {
 getMaritalStatus (){
          this.marital_list = [
             {
-            GEN_NAME : 'Male',
-            GEN_ID : `1|Male`
+            GEN_NAME : 'Single',
+            GEN_ID : `1|Single`
             },
             {
-            GEN_NAME : 'Female',
-            GEN_ID : `2|Female`
+            GEN_NAME : 'Married',
+            GEN_ID : `2|Married`
             }
          ];
 },
