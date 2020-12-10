@@ -8,7 +8,7 @@
 <v-btn
 class="mr-10 primary"
 text
-href="https://orangeroomdigital.com/salesapp/public/">
+href="https://salesapp.ordd.tk/">
 <span>Dashboard (DEV)</span>
 </v-btn>
 </v-app-bar>
