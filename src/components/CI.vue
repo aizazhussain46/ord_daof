@@ -665,8 +665,8 @@ userScore : '',
       this.getMaritalStatus();
 
       this.countries = [
-         {CNT_OFFICALNAME:'pakistan',CNT_COUNTRYCODE:`1|pakistan`},
-         {CNT_OFFICALNAME:'other',CNT_COUNTRYCODE:`2|other`},
+         {CNT_OFFICALNAME:'Pakistan',CNT_COUNTRYCODE:`1|Pakistan`},
+         {CNT_OFFICALNAME:'Other',CNT_COUNTRYCODE:`2|Other`},
          ];
 
    },
