@@ -409,7 +409,7 @@ methods: {
 
 GetBanks(){
   
-            this.banks.push([
+            this.banks = [
               {
                 BNK_SHORTNAME : 'HBL',
                 BNK_ID : `1|HBL`
@@ -422,7 +422,7 @@ GetBanks(){
                 BNK_SHORTNAME : 'ABL',
                 BNK_ID : `3|ABL`
               }
-            ]);
+            ];
 
 },  
 
@@ -588,10 +588,8 @@ customer_id:this.customer_id
 };
 
 this.$store.dispatch('hold_od',others_details);
-
 // other details end
 
-console.log(bank_details, investment_details, others_details);
 
 // Fatca Details
 var nats = [];
