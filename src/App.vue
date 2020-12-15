@@ -1,19 +1,24 @@
 <template>
 <v-app>
-<v-app-bar app class="white">
+<v-app-bar app class="white" >
 <v-toolbar-title class="headline text-uppercase">
-<v-img class="mx-10" src="@/assets/header-logo-img.png" />
+    <div style="width: 42%; margin-left:37%;">
+    <v-img   src="@/assets/header-logo-img.png" />
+    </div>
+
+
+
 </v-toolbar-title>
 <v-spacer></v-spacer>
-<v-btn
-class="mr-10 primary"
+<v-btn style="margin:6%;"
+class="primary"
 text
 href="https://salesapp.ordd.tk/">
 <span>Dashboard (DEV)</span>
 </v-btn>
 </v-app-bar>
 
-<v-main class="mt-5">
+<v-main class="mt-15">
 <Form/>
 </v-main>
 </v-app>
@@ -30,9 +35,3 @@ export default {
     }),
 };
 </script>
-
-<style>
-.v-image__image{
-    height: 94%;
-}
-</style>
